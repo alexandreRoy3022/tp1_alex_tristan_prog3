@@ -30,6 +30,9 @@ class CataloguePgn(Catalogue, ABC):
     def ajouter_nom_joueurs(self, headers):
         self.nom_joueurs = headers["Black"] + headers["White"]
 
+    def ajouter_nom_site(self, headers):
+        pass
+
     def ajouter_date_partie(self, headers):
         self.date_partie = headers["Date"]
 
