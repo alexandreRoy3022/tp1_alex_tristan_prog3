@@ -1,4 +1,4 @@
-from abc import abstractclassmethod, abstractmethod
+from abc import abstractmethod
 
 
 
@@ -9,6 +9,10 @@ from action.partie import Partie
 class Catalogue:
     def __init__(self):
         self.parties = []
+
+    @property
+    def Parties(self):
+        return self.parties
 
     def ajouter_partie(self, partie: Partie):
         self.parties.append(partie)
@@ -21,6 +25,6 @@ class Catalogue:
         pass
 
     @abstractmethod
-    def sauvegarder(cls):
+    def sauvegarder(self):
         pass
 

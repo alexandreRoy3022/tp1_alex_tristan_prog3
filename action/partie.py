@@ -1,8 +1,10 @@
 class Partie:
     def __init__(self):
-        self.__nom_joueurs = None
+        self.nom_joueur_black = None
+        self.nom_joueur_white = None
         self.date_partie = None
-        self.niveau_joueurs = None
+        self.niveau_joueur_black = None
+        self.niveau_joueur_white = None
         self.type_partie = None
         self.duree_partie = None
         self.resultat_partie = None
@@ -10,59 +12,75 @@ class Partie:
         self.deplacements = []
 
     @property
-    def nom_joueurs(self):
-        return self.__nom_joueurs
+    def Nom_joueur_black(self):
+        return self.nom_joueur_black
 
-    @nom_joueurs.setter
-    def nom_joueurs(self, nom_joueurs):
-        self.__nom_joueurs = nom_joueurs
+    @Nom_joueur_black.setter
+    def Nom_joueur_black(self, nom_joueur_black):
+        self.nom_joueur_black = nom_joueur_black
 
     @property
-    def date_partie(self):
+    def Nom_joueur_white(self):
+        return self.nom_joueur_white
+
+    @Nom_joueur_white.setter
+    def Nom_joueur_white(self, nom_joueur_white):
+        self.nom_joueur_white = nom_joueur_white
+
+    @property
+    def Date_partie(self):
         return self.date_partie
 
-    @date_partie.setter
-    def date_partie(self, date_partie):
+    @Date_partie.setter
+    def Date_partie(self, date_partie):
         self.date_partie = date_partie
 
     @property
-    def niveau_joueurs(self):
-        return self.niveau_joueurs
+    def Niveau_joueur_black(self):
+        return self.niveau_joueur_black
 
-    @niveau_joueurs.setter
-    def niveau_joueurs(self, niveau_joueurs):
-        self.niveau_joueurs = niveau_joueurs
+    @Niveau_joueur_black.setter
+    def Niveau_joueur_black(self, niveau_joueur_black):
+        self.niveau_joueur_black = niveau_joueur_black
 
     @property
-    def type_partie(self):
+    def Niveau_joueur_white(self):
+        return self.niveau_joueur_white
+
+    @Niveau_joueur_white.setter
+    def Niveau_joueur_white(self, niveau_joueur_white):
+        self.niveau_joueur_white = niveau_joueur_white
+
+    @property
+    def Type_partie(self):
         return self.type_partie
 
-    @type_partie.setter
-    def type_partie(self, type_partie):
+    @Type_partie.setter
+    def Type_partie(self, type_partie):
         self.type_partie = type_partie
 
     @property
-    def duree_partie(self):
+    def Duree_partie(self):
         return self.duree_partie
 
-    @duree_partie.setter
-    def duree_partie(self, duree_partie):
+    @Duree_partie.setter
+    def Duree_partie(self, duree_partie):
         self.duree_partie = duree_partie
 
     @property
-    def resultat_partie(self):
+    def Resultat_partie(self):
         return self.resultat_partie
 
-    @resultat_partie.setter
-    def resultat_partie(self, resultat_partie):
+    @Resultat_partie.setter
+    def Resultat_partie(self, resultat_partie):
         self.resultat_partie = resultat_partie
 
     @property
-    def nom_ouverture(self):
+    def Nom_ouverture(self):
         return self.nom_ouverture
 
-    @nom_ouverture.setter
-    def nom_ouverture(self, nom_ouverture_utilisee):
+    @Nom_ouverture.setter
+    def Nom_ouverture(self, nom_ouverture_utilisee):
         self.nom_ouverture = nom_ouverture_utilisee
 
     def ajouter_deplacement(self, deplacement):
