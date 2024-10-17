@@ -1,9 +1,5 @@
 from abc import abstractmethod
-
-
-
 from action.partie import Partie
-
 
 
 class Catalogue:
@@ -11,7 +7,7 @@ class Catalogue:
         self.parties = []
 
     @property
-    def Parties(self):
+    def toutes_parties(self):
         return self.parties
 
     def obtenir_parties(self) -> []:
@@ -21,8 +17,7 @@ class Catalogue:
 
         return parties
 
-    def obtenir_une_partie(self, evenement) :
-        parties = []
+    def obtenir_une_partie(self, evenement):
         for partie in self.parties:
             if partie.Evenement == evenement:
                 return partie
@@ -32,14 +27,5 @@ class Catalogue:
     def ajouter_partie(self, partie: Partie):
         self.parties.append(partie)
 
-    def supprimer_partie(self, no_partie):
-        self.parties.remove(self.parties[no_partie])
-
-    @abstractmethod
-    def lire(self, nom_fichier):
-        pass
-
-    @abstractmethod
-    def sauvegarder(self):
-        pass
-
+    def supprimer_partie(self, partie: Partie):
+        self.parties.remove(partie)

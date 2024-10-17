@@ -1,10 +1,6 @@
 from abc import ABC
-from wsgiref import headers
-
 from action.catalogue import Catalogue
-
 import chess.pgn
-
 from action.partie import Partie
 
 
@@ -51,7 +47,7 @@ class CataloguePgn(Catalogue, ABC):
     def ecrire(self):
 
         CptPartie = 0
-        for une_partie in self.Parties:
+        for une_partie in self.toutes_parties:
             CptPartie += 1
             game = chess.pgn.Game()
             game.headers["Event"] = une_partie.Evenement
@@ -69,8 +65,7 @@ class CataloguePgn(Catalogue, ABC):
 
             node = game.add_variation(une_partie.deplacement[0])
 
-            for i in range (1 , len(une_partie.deplacement)):
-                #node = game.add_variation(chess.Move.from_uci(une_partie.deplacement[i]))
+            for i in range(1, len(une_partie.deplacement)):
                 node = node.add_variation(une_partie.deplacement[i])
 
 

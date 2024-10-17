@@ -1,10 +1,7 @@
 from tkinter import *
 from tkinter.ttk import Combobox
-
 import chess
-
 from action.partie import Partie
-from action.catalogue import Catalogue
 from action.catalogue_pgn import CataloguePgn
 
 
@@ -14,15 +11,13 @@ class Application:
 
         self.panedwindow = PanedWindow(self.root)
 
-        self.image_de_decoration = PhotoImage(file="../—Pngtree—black and white chess board_5983396.png")
-
-        self.frame1 = Frame(self.panedwindow, width=400, height=300, relief=RAISED, background="lightgrey")
+        self.frame1 = Frame(self.panedwindow, width=300, height=300, relief=RAISED, background="lightgrey")
         self.frame2 = Frame(self.panedwindow, width=400, height=300, relief=RAISED)
 
         self.panedwindow.add(self.frame1, height=800)
         self.panedwindow.add(self.frame2, height=800)
 
-        self.titre = Label(self.frame2, text="Bienvenu au menu principal", font=("Helvetica", 60))
+        self.titre = Label(self.frame2, text="Bienvenue au menu principal", font=("Helvetica", 50))
         self.texte_sous_le_titre = Label(self.frame2, text="Veuillez cliquer sur l'option que vous désirez à gauche")
         self.titre.grid(column=0, row=0, columnspan=2)
         self.texte_sous_le_titre.grid(column=0, row=1, columnspan=2)
@@ -30,15 +25,9 @@ class Application:
         self.message_avertissement = Label(self.frame2, text="", fg="red")
         self.message_avertissement.grid(column=0, row=2, columnspan=2)
 
-        self.arriere_plan_frame_1 = Label(self.frame1, image=self.image_de_decoration)
-
-        #self.bouton_ajouter_partie = Button(self.frame1, text="Ajouter partie", image=self.image_de_decoration, compound="top", command=self.protocole_ajout_partie)
-        #self.bouton_modifier_partie = Button(self.frame1, text="Modifier Partie", image=self.image_de_decoration, compound="top", command=print("modifier"))
-        #self.bouton_supprimer_partie = Button(self.frame1, text="Supprimer Partie", image=self.image_de_decoration, compound="top", command=print("supprimer"))
-        #self.bouton_quitter = Button(self.frame1, text="Quitter", bg="red", fg="white", command=self.root.destroy)
         self.bouton_ajouter_partie = Button(self.frame1, text="Ajouter partie", compound="top", command=self.protocole_ajout_partie)
         self.bouton_modifier_partie = Button(self.frame1, text="Modifier Partie", compound="top", command=self.protocole_modifier_partie)
-        self.bouton_supprimer_partie = Button(self.frame1, text="Supprimer Partie", compound="top", command=print("supprimer"))
+        self.bouton_supprimer_partie = Button(self.frame1, text="Supprimer Partie", compound="top", command=self.protocole_supprimer_partie)
         self.bouton_quitter = Button(self.frame1, text="Quitter", bg="red", fg="white", command=self.root.destroy)
 
 
@@ -64,16 +53,16 @@ class Application:
 
 
         lblTitre = Label(self.frame2, text="Veuillez répondre à chaque entrée ci-dessous")
-        lblTitre.grid(column=0, row=ctpWidget , padx=10, pady=10, sticky=W)
+        lblTitre.grid(column=0, row=ctpWidget, padx=10, pady=10, sticky=W)
         self.message_avertissement.grid(column=0, row=ctpWidget+1, columnspan=2)
 
-        ctpWidget +=4
-        self.input_evenement, ctpWidget = self.AjouterEntry(self.frame2,"Évenement:", ctpWidget)
-        self.input_nom_joueur_blanc, ctpWidget = self.AjouterEntry(self.frame2,"Nom du joueur blanc:", ctpWidget)
-        self.input_nom_joueur_noir, ctpWidget = self.AjouterEntry(self.frame2,"Nom du joueur noir:", ctpWidget)
-        self.input_date_partie, ctpWidget = self.AjouterEntry(self.frame2,"Date de la partie:", ctpWidget)
-        self.input_elo_blanc, ctpWidget = self.AjouterEntry(self.frame2,"Elo du joueur blanc:", ctpWidget)
-        self.input_elo_noir, ctpWidget = self.AjouterEntry(self.frame2,"Elo du joueur noir:", ctpWidget)
+        ctpWidget += 4
+        self.input_evenement, ctpWidget = self.ajouterEntry(self.frame2, "Évenement:", ctpWidget)
+        self.input_nom_joueur_blanc, ctpWidget = self.ajouterEntry(self.frame2, "Nom du joueur blanc:", ctpWidget)
+        self.input_nom_joueur_noir, ctpWidget = self.ajouterEntry(self.frame2, "Nom du joueur noir:", ctpWidget)
+        self.input_date_partie, ctpWidget = self.ajouterEntry(self.frame2, "Date de la partie:", ctpWidget)
+        self.input_elo_blanc, ctpWidget = self.ajouterEntry(self.frame2, "Elo du joueur blanc:", ctpWidget)
+        self.input_elo_noir, ctpWidget = self.ajouterEntry(self.frame2, "Elo du joueur noir:", ctpWidget)
 
         lbl_type_partie = Label(self.frame2, text="Type de partie:")
         n = StringVar()
@@ -84,24 +73,24 @@ class Application:
         self.input_type_partie.grid(column=1, row=ctpWidget)
         ctpWidget += 1
 
-        self.input_duration_partie, ctpWidget = self.AjouterEntry(self.frame2,"Durée de la partie:", ctpWidget)
-        self.input_resultat_partie, ctpWidget = self.AjouterEntry(self.frame2,"Résultat de la partie:", ctpWidget)
-        self.input_nom_ouverture, ctpWidget = self.AjouterEntry(self.frame2,"Nom ouverture:", ctpWidget)
-        self.input_deplacements, ctpWidget = self.AjouterEntry(self.frame2,"Déplacements:", ctpWidget)
+        self.input_duration_partie, ctpWidget = self.ajouterEntry(self.frame2, "Durée de la partie:", ctpWidget)
+        self.input_resultat_partie, ctpWidget = self.ajouterEntry(self.frame2, "Résultat de la partie:", ctpWidget)
+        self.input_nom_ouverture, ctpWidget = self.ajouterEntry(self.frame2, "Nom ouverture:", ctpWidget)
+        self.input_deplacements, ctpWidget = self.ajouterEntry(self.frame2, "Déplacements:", ctpWidget)
 
         but_ajouter_partie = Button(self.frame2, text="Ajouter Partie", command=self.ecrire_infos_dans_fichier)
         but_ajouter_partie.grid(column=0, row=ctpWidget, padx=10, pady=10, sticky=W)
         but_retourner_accueil = Button(self.frame2, text="Retourner à la page d'accueil", command=self.retourner_page_accueil)
         but_retourner_accueil.grid(column=1, row=ctpWidget, padx=10, pady=10, sticky=W)
 
-    def AjouterEntry(self, frame : Frame, titre : str, rangee : int, value = "") -> Entry :
+    def ajouterEntry(self, frame: Frame, titre: str, rangee: int, value="") -> Entry:
         lbl = Label(frame, text=titre)
         input = Entry(frame)
         lbl.grid(column=0, row=rangee)
         input.grid(column=1, row=rangee)
         if len(value) > 0:
             input.insert(0, value)
-        rangee +=1
+        rangee += 1
 
         return input, rangee
 
@@ -118,28 +107,30 @@ class Application:
         self.message_avertissement.grid(column=0, row=2, columnspan=2)
 
         lbl_evenement = Label(self.frame2, text="Évenement:")
-        n = StringVar()
         self.input_evenement = Combobox(self.frame2, width=17, state='readonly')
         self.input_evenement['values'] = (self.mon_catalogue.obtenir_parties())
         lbl_evenement.grid(column=0, row=4)
         self.input_evenement.grid(column=1, row=4)
-#       self.input_evenement.bind("<<ComboboxSelected>>", self.select_evenement())
 
         but_afficher_partie = Button(self.frame2, text="Afficher Partie", command=self.select_evenement)
         but_afficher_partie.grid(column=2, row=4, padx=10, pady=10, sticky=W)
 
     def select_evenement(self):
         partie = self.mon_catalogue.obtenir_une_partie(self.input_evenement.get())
-        lisTypePartie = 'Classique','Rapide'
-        selected_value = StringVar()
+        lisTypePartie = 'Classique', 'Rapide'
 
         if partie:
             ctpWidget = 6
-            self.input_nom_joueur_blanc, ctpWidget = self.AjouterEntry(self.frame2, "Nom du joueur blanc:", ctpWidget, partie.Nom_joueur_white)
-            self.input_nom_joueur_noir, ctpWidget = self.AjouterEntry(self.frame2, "Nom du joueur noir:", ctpWidget, partie.Nom_joueur_black)
-            self.input_date_partie, ctpWidget = self.AjouterEntry(self.frame2,"Date de la partie:", ctpWidget, partie.Date_partie)
-            self.input_elo_blanc, ctpWidget = self.AjouterEntry(self.frame2,"Elo du joueur blanc:", ctpWidget, partie.Niveau_joueur_white)
-            self.input_elo_noir, ctpWidget = self.AjouterEntry(self.frame2,"Elo du joueur noir:", ctpWidget, partie.Niveau_joueur_black)
+            self.input_nom_joueur_blanc, ctpWidget = self.ajouterEntry(self.frame2, "Nom du joueur blanc:", ctpWidget,
+                                                                       partie.Nom_joueur_white)
+            self.input_nom_joueur_noir, ctpWidget = self.ajouterEntry(self.frame2, "Nom du joueur noir:", ctpWidget,
+                                                                      partie.Nom_joueur_black)
+            self.input_date_partie, ctpWidget = self.ajouterEntry(self.frame2, "Date de la partie:", ctpWidget,
+                                                                  partie.Date_partie)
+            self.input_elo_blanc, ctpWidget = self.ajouterEntry(self.frame2, "Elo du joueur blanc:", ctpWidget,
+                                                                partie.Niveau_joueur_white)
+            self.input_elo_noir, ctpWidget = self.ajouterEntry(self.frame2, "Elo du joueur noir:", ctpWidget,
+                                                               partie.Niveau_joueur_black)
 
             lbl_type_partie = Label(self.frame2, text="Type de partie:")
 
@@ -150,17 +141,21 @@ class Application:
             self.input_type_partie.grid(column=1, row=ctpWidget)
             ctpWidget += 1
 
-            self.input_duration_partie, ctpWidget = self.AjouterEntry(self.frame2,"Durée de la partie:", ctpWidget, partie.Duree_partie)
-            self.input_resultat_partie, ctpWidget = self.AjouterEntry(self.frame2,"Résultat de la partie:", ctpWidget, partie.Resultat_partie)
-            self.input_nom_ouverture, ctpWidget = self.AjouterEntry(self.frame2,"Nom ouverture:", ctpWidget, partie.Nom_ouverture)
-            self.input_deplacements, ctpWidget = self.AjouterEntry(self.frame2,"Déplacements:", ctpWidget, self.merge_deplacements(partie))
+            self.input_duration_partie, ctpWidget = self.ajouterEntry(self.frame2, "Durée de la partie:", ctpWidget,
+                                                                      partie.Duree_partie)
+            self.input_resultat_partie, ctpWidget = self.ajouterEntry(self.frame2, "Résultat de la partie:", ctpWidget,
+                                                                      partie.Resultat_partie)
+            self.input_nom_ouverture, ctpWidget = self.ajouterEntry(self.frame2, "Nom ouverture:", ctpWidget,
+                                                                    partie.Nom_ouverture)
+            self.input_deplacements, ctpWidget = self.ajouterEntry(self.frame2, "Déplacements:", ctpWidget,
+                                                                   self.merge_deplacements(partie))
 
             but_modifier_partie = Button(self.frame2, text="Modifier Partie", command=self.modifier_infos_dans_fichier)
             but_modifier_partie.grid(column=0, row=ctpWidget, padx=10, pady=10, sticky=W)
             but_retourner_accueil = Button(self.frame2, text="Retourner à la page d'accueil", command=self.retourner_page_accueil)
             but_retourner_accueil.grid(column=1, row=ctpWidget, padx=10, pady=10, sticky=W)
 
-    def merge_deplacements(self, partie : Partie):
+    def merge_deplacements(self, partie: Partie):
         board = chess.Board()
 
         resultat = ""
@@ -269,6 +264,106 @@ class Application:
         self.bouton_supprimer_partie.config(state=NORMAL)
         self.bouton_quitter.config(state=NORMAL)
 
+    def protocole_supprimer_partie(self):
+        self.titre.grid_forget()
+        self.texte_sous_le_titre.grid_forget()
+
+        self.bouton_ajouter_partie.config(state=DISABLED)
+        self.bouton_modifier_partie.config(state=DISABLED)
+        self.bouton_supprimer_partie.config(state=DISABLED)
+
+        lblTitre = Label(self.frame2, text="Veuillez sélectionner un évenement")
+        lblTitre.grid(column=0, row=0, padx=10, pady=10, sticky=W)
+        self.message_avertissement.grid(column=0, row=2, columnspan=2)
+
+        lbl_evenement = Label(self.frame2, text="Évenement:")
+        self.input_evenement = Combobox(self.frame2, width=17, state='readonly')
+        self.input_evenement['values'] = (self.mon_catalogue.obtenir_parties())
+        lbl_evenement.grid(column=0, row=4)
+        self.input_evenement.grid(column=1, row=4)
+
+        but_afficher_partie = Button(self.frame2, text="Afficher Partie", command=self.afficher_informations)
+        but_afficher_partie.grid(column=2, row=4, padx=10, pady=10, sticky=W)
+
+    def afficher_informations(self):
+        partie = self.mon_catalogue.obtenir_une_partie(self.input_evenement.get())
+
+        if partie:
+            ctpWidget = 6
+            if partie:
+                ctpWidget = 6
+                self.input_nom_joueur_blanc, ctpWidget = self.ajouterEntry(self.frame2, "Nom du joueur blanc:",
+                                                                           ctpWidget, partie.Nom_joueur_white)
+                self.input_nom_joueur_blanc.config(state="readonly")
+
+                self.input_nom_joueur_noir, ctpWidget = self.ajouterEntry(self.frame2, "Nom du joueur noir:", ctpWidget,
+                                                                          partie.Nom_joueur_black)
+                self.input_nom_joueur_noir.config(state="readonly")
+
+                self.input_date_partie, ctpWidget = self.ajouterEntry(self.frame2, "Date de la partie:", ctpWidget,
+                                                                      partie.Date_partie)
+                self.input_date_partie.config(state="readonly")
+
+                self.input_elo_blanc, ctpWidget = self.ajouterEntry(self.frame2, "Elo du joueur blanc:", ctpWidget,
+                                                                    partie.Niveau_joueur_white)
+                self.input_elo_blanc.config(state="readonly")
+
+                self.input_elo_noir, ctpWidget = self.ajouterEntry(self.frame2, "Elo du joueur noir:", ctpWidget,
+                                                                   partie.Niveau_joueur_black)
+                self.input_elo_noir.config(state="readonly")
+
+                self.input_type_partie, ctpWidget = self.ajouterEntry(self.frame2, "Type de partie: ", ctpWidget,
+                                                                      partie.Type_partie)
+                self.input_type_partie.config(state="readonly")
+
+                self.input_duration_partie, ctpWidget = self.ajouterEntry(self.frame2, "Durée de la partie:", ctpWidget,
+                                                                          partie.Duree_partie)
+                self.input_duration_partie.config(state="readonly")
+
+                self.input_resultat_partie, ctpWidget = self.ajouterEntry(self.frame2, "Résultat de la partie:",
+                                                                          ctpWidget, partie.Resultat_partie)
+                self.input_resultat_partie.config(state="readonly")
+
+                self.input_nom_ouverture, ctpWidget = self.ajouterEntry(self.frame2, "Nom ouverture:", ctpWidget,
+                                                                        partie.Nom_ouverture)
+                self.input_nom_ouverture.config(state="readonly")
+
+                self.input_deplacements, ctpWidget = self.ajouterEntry(self.frame2, "Déplacements:", ctpWidget,
+                                                                       self.merge_deplacements(partie))
+                self.input_deplacements.config(state="readonly")
+
+
+            but_supprimer_partie = Button(self.frame2, text="Supprimer Partie", command=self.supprimer_infos_dans_fichier)
+            but_supprimer_partie.grid(column=0, row=ctpWidget, padx=10, pady=10, sticky=W)
+            but_retourner_accueil = Button(self.frame2, text="Retourner à la page d'accueil",
+                                           command=self.retourner_page_accueil)
+            but_retourner_accueil.grid(column=1, row=ctpWidget, padx=10, pady=10, sticky=W)
+
+    def supprimer_infos_dans_fichier(self):
+        partie = self.mon_catalogue.obtenir_une_partie(self.input_evenement.get())
+
+        if partie:
+            with open("..\\action\\data\\chess.pgn", "r") as f:
+                lignes = f.readlines()
+
+        nouvelle_liste = []
+        ignorer = False
+
+        for ligne in lignes:
+            if ligne.startswith("[Event "):
+                if self.input_evenement.get() in ligne:
+                    ignorer = True
+                else:
+                    ignorer = False
+
+            if not ignorer:
+                nouvelle_liste.append(ligne)
+
+        with open("..\\action\\data\\chess.pgn", "w") as f:
+            f.writelines(nouvelle_liste)
+
+        self.avertissement_de_succès = Label(self.frame2, text="Partie supprimée avec succès!")
+        self.avertissement_de_succès.grid(column=0, row=1, padx=10, pady=10)
 
 
     def lancer_application(self):

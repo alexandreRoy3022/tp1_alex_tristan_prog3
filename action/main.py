@@ -1,4 +1,3 @@
-from action.catalogue_pgn import CataloguePgn
 from library.app import Application
 
 if __name__ == '__main__':
