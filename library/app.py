@@ -19,8 +19,8 @@ class Application:
         self.frame1 = Frame(self.panedwindow, width=400, height=300, relief=RAISED, background="lightgrey")
         self.frame2 = Frame(self.panedwindow, width=400, height=300, relief=RAISED)
 
-        self.panedwindow.add(self.frame1)
-        self.panedwindow.add(self.frame2)
+        self.panedwindow.add(self.frame1, height=800)
+        self.panedwindow.add(self.frame2, height=800)
 
         self.titre = Label(self.frame2, text="Bienvenu au menu principal", font=("Helvetica", 60))
         self.texte_sous_le_titre = Label(self.frame2, text="Veuillez cliquer sur l'option que vous désirez à gauche")
@@ -119,7 +119,7 @@ class Application:
 
         lbl_evenement = Label(self.frame2, text="Évenement:")
         n = StringVar()
-        self.input_evenement = Combobox(self.frame2, width=17, textvariable=n)
+        self.input_evenement = Combobox(self.frame2, width=17, state='readonly')
         self.input_evenement['values'] = (self.mon_catalogue.obtenir_parties())
         lbl_evenement.grid(column=0, row=4)
         self.input_evenement.grid(column=1, row=4)
@@ -130,6 +130,8 @@ class Application:
 
     def select_evenement(self):
         partie = self.mon_catalogue.obtenir_une_partie(self.input_evenement.get())
+        lisTypePartie = 'Classique','Rapide'
+        selected_value = StringVar()
 
         if partie:
             ctpWidget = 6
@@ -140,13 +142,12 @@ class Application:
             self.input_elo_noir, ctpWidget = self.AjouterEntry(self.frame2,"Elo du joueur noir:", ctpWidget, partie.Niveau_joueur_black)
 
             lbl_type_partie = Label(self.frame2, text="Type de partie:")
-            n = StringVar()
-            self.input_type_partie = Combobox(self.frame2, width=17, textvariable=n)
-            self.input_type_partie['values'] = ('Classique',
-                                                'Rapide')
+
+            self.input_type_partie = Combobox(self.frame2, width=17, state='readonly')
+            self.input_type_partie['values'] = lisTypePartie
+            self.input_type_partie.current(lisTypePartie.index(partie.Type_partie))
             lbl_type_partie.grid(column=0, row=ctpWidget)
             self.input_type_partie.grid(column=1, row=ctpWidget)
-            self.input_type_partie.insert(0, partie.Type_partie)
             ctpWidget += 1
 
             self.input_duration_partie, ctpWidget = self.AjouterEntry(self.frame2,"Durée de la partie:", ctpWidget, partie.Duree_partie)
@@ -180,7 +181,33 @@ class Application:
         self.bouton_supprimer_partie.config(state=NORMAL)
 
     def modifier_infos_dans_fichier(self):
-        pass
+        partie = self.mon_catalogue.obtenir_une_partie(self.input_evenement.get())
+
+        if partie:
+            partie.Nom_joueur_white = self.input_nom_joueur_blanc.get()
+            partie.Nom_joueur_black = self.input_nom_joueur_noir.get()
+            partie.Niveau_joueur_white = self.input_elo_blanc.get()
+            partie.Niveau_joueur_black = self.input_elo_noir.get()
+            partie.Date_partie = self.input_date_partie.get()
+            partie.Type_partie = self.input_type_partie.get()
+            partie.Duree_partie = self.input_duration_partie.get()
+            partie.Resultat_partie = self.input_resultat_partie.get()
+            partie.Nom_ouverture = self.input_nom_ouverture.get()
+            deplacements = self.input_deplacements.get().split()
+
+            board = chess.Board()
+            partie.deplacement = []
+
+            for deplacement in deplacements:
+                try:
+                    move_complet = board.push_san(deplacement)
+                    partie.ajouter_deplacement(move_complet)
+                except chess.InvalidMoveError:
+                    self.message_avertissement.config(text="Déplacement invalide")
+                    return
+
+            self.mon_catalogue.ajouter_partie(partie)
+            self.mon_catalogue.ecrire()
 
     def ecrire_infos_dans_fichier(self):
         evenement = self.input_evenement.get()
@@ -195,7 +222,7 @@ class Application:
         nom_ouverture = self.input_nom_ouverture.get()
         deplacements = self.input_deplacements.get().split()
 
-        if not all([evenement, nom_joueur_blanc, nom_joueur_noir, date_partie, elo_blanc, elo_noir, type_partie, duration_partie, resultat_partie]):
+        if not all([evenement, nom_joueur_blanc, nom_joueur_noir, date_partie, elo_blanc, elo_noir, type_partie, duration_partie, resultat_partie, nom_ouverture]):
             self.message_avertissement.config(text="Veuillez remplir les informations demandées manquantes")
             return
 
@@ -213,11 +240,17 @@ class Application:
 
         board = chess.Board()
         for deplacement in deplacements:
-            move_complet = board.push_san(deplacement)
-            nouv_partie.ajouter_deplacement(move_complet)
+            try:
+                move_complet = board.push_san(deplacement)
+                nouv_partie.ajouter_deplacement(move_complet)
+            except chess.InvalidMoveError:
+                self.message_avertissement.config(text="Déplacement invalide")
+                return
 
         self.mon_catalogue.ajouter_partie(nouv_partie)
         self.mon_catalogue.ecrire()
+
+        self.message_avertissement.config(text="")
 
         self.input_evenement.delete(0, END)
         self.input_nom_joueur_blanc.delete(0, END)
@@ -235,6 +268,8 @@ class Application:
         self.bouton_modifier_partie.config(state=NORMAL)
         self.bouton_supprimer_partie.config(state=NORMAL)
         self.bouton_quitter.config(state=NORMAL)
+
+
 
     def lancer_application(self):
         self.root.mainloop()
