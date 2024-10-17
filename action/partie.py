@@ -1,5 +1,6 @@
 class Partie:
     def __init__(self):
+        self.evenement = None
         self.nom_joueur_black = None
         self.nom_joueur_white = None
         self.date_partie = None
@@ -9,7 +10,15 @@ class Partie:
         self.duree_partie = None
         self.resultat_partie = None
         self.nom_ouverture = None
-        self.deplacements = []
+        self.deplacement = []
+
+    @property
+    def Evenement(self):
+        return self.evenement
+
+    @Evenement.setter
+    def Evenement(self, evenement):
+        self.evenement = evenement
 
     @property
     def Nom_joueur_black(self):
@@ -84,10 +93,10 @@ class Partie:
         self.nom_ouverture = nom_ouverture_utilisee
 
     def ajouter_deplacement(self, deplacement):
-        self.deplacements.append(deplacement)
+        self.deplacement.append(deplacement)
 
     def modifier_deplacement(self, no_ancien_deplacement, nouveau_deplacement):
-        self.deplacements[no_ancien_deplacement] = nouveau_deplacement
+        self.deplacement[no_ancien_deplacement] = nouveau_deplacement
 
     def supprimer_deplacement(self, no_deplacement):
-        self.deplacements.remove(self.deplacements[no_deplacement])
+        self.deplacement.remove(self.deplacement[no_deplacement])

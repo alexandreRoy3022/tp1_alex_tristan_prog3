@@ -7,6 +7,7 @@
 [Result "1-0"]
 [BlackElo "2212"]
 [WhiteElo "2024"]
+[Type "?"]
 [Time "00:23:45"]
 [ECO "B28"]
 
@@ -21,6 +22,7 @@
 [Result "1-0"]
 [BlackElo "2024"]
 [WhiteElo "2090"]
+[Type "?"]
 [Time "00:23:45"]
 [ECO "A15"]
 
@@ -35,8 +37,54 @@
 [Result "3"]
 [BlackElo "3"]
 [WhiteElo "3"]
+[Type "?"]
 [Time "3"]
 [ECO "3"]
 
 1. e4 c5 3
+ 
+[Event "Event 4"]
+[Site "?"]
+[Date "4"]
+[Round "?"]
+[White "4"]
+[Black "4"]
+[Result "4"]
+[BlackElo "4"]
+[WhiteElo "4"]
+[Type "Classique"]
+[Time "4"]
+[ECO "4"]
+
+1. e4 c5 4
+ 
+[Event "5"]
+[Site "?"]
+[Date "5"]
+[Round "?"]
+[White "5"]
+[Black "5"]
+[Result "5"]
+[BlackElo "5"]
+[WhiteElo "5"]
+[Type "Rapide"]
+[Time "5"]
+[ECO "5"]
+
+1. e4 c5 5
+ 
+[Event "6"]
+[Site "?"]
+[Date "6"]
+[Round "?"]
+[White "6"]
+[Black "6"]
+[Result "6"]
+[BlackElo "6"]
+[WhiteElo "6"]
+[Type "Rapide"]
+[Time "6"]
+[ECO "6"]
+
+1. e4 c5 6
  

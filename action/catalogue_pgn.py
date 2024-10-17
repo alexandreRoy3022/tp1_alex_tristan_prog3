@@ -27,15 +27,16 @@ class CataloguePgn(Catalogue, ABC):
             headers = dict(game.headers)
 
             une_partie = Partie()
-            une_partie.nom_joueur_black = headers["Black"]
-            une_partie.nom_joueur_white = headers["White"]
-            une_partie.niveau_joueur_black = headers["BlackElo"]
-            une_partie.niveau_joueur_white = headers["WhiteElo"]
-            une_partie.date_partie = headers["Date"]
-            une_partie.type_partie = headers["Event"]
-            une_partie.duree_partie = headers["Time"]
-            une_partie.resultat_partie = headers["Result"]
-            une_partie.nom_ouverture = headers["ECO"]
+            une_partie.Evenement = headers["Event"]
+            une_partie.Nom_joueur_black = headers["Black"]
+            une_partie.Nom_joueur_white = headers["White"]
+            une_partie.Niveau_joueur_black = headers["BlackElo"]
+            une_partie.Niveau_joueur_white = headers["WhiteElo"]
+            une_partie.Date_partie = headers["Date"]
+            une_partie.Type_partie = headers["Type"]
+            une_partie.Duree_partie = headers["Time"]
+            une_partie.Resultat_partie = headers["Result"]
+            une_partie.Nom_ouverture = headers["ECO"]
 
             headers["moves"] = game.board().variation_san(game.mainline_moves())
 
@@ -53,23 +54,24 @@ class CataloguePgn(Catalogue, ABC):
         for une_partie in self.Parties:
             CptPartie += 1
             game = chess.pgn.Game()
-            game.headers["Black"] = une_partie.nom_joueur_black
-            game.headers["White"] = une_partie.nom_joueur_white
-            game.headers["BlackElo"] = une_partie.niveau_joueur_black
-            game.headers["WhiteElo"] = une_partie.niveau_joueur_white
-            game.headers["Date"] = une_partie.date_partie
-            game.headers["Event"] = une_partie.type_partie
-            game.headers["Time"] = une_partie.duree_partie
-            game.headers["Result"] = une_partie.resultat_partie
-            game.headers["ECO"] = une_partie.nom_ouverture
-            if len(une_partie.deplacements) == 0:
+            game.headers["Event"] = une_partie.Evenement
+            game.headers["Black"] = une_partie.Nom_joueur_black
+            game.headers["White"] = une_partie.Nom_joueur_white
+            game.headers["BlackElo"] = une_partie.Niveau_joueur_black
+            game.headers["WhiteElo"] = une_partie.Niveau_joueur_white
+            game.headers["Date"] = une_partie.Date_partie
+            game.headers["Type"] = une_partie.Type_partie
+            game.headers["Time"] = une_partie.Duree_partie
+            game.headers["Result"] = une_partie.Resultat_partie
+            game.headers["ECO"] = une_partie.Nom_ouverture
+            if len(une_partie.deplacement) == 0:
                 break
 
-            node = game.add_variation(une_partie.deplacements[0])
+            node = game.add_variation(une_partie.deplacement[0])
 
-            for i in range (1 , len(une_partie.deplacements)):
-                #node = game.add_variation(chess.Move.from_uci(une_partie.deplacements[i]))
-                node = node.add_variation(une_partie.deplacements[i])
+            for i in range (1 , len(une_partie.deplacement)):
+                #node = game.add_variation(chess.Move.from_uci(une_partie.deplacement[i]))
+                node = node.add_variation(une_partie.deplacement[i])
 
 
             if CptPartie == 1:
