@@ -1,30 +1,30 @@
-[Event "azuka"]
-[Site "?"]
-[Date "Mamadou"]
-[Round "?"]
-[White "Zimbabwe"]
-[Black "Mamadou"]
-[Result "1-0"]
-[BlackElo "4314"]
-[WhiteElo "1234"]
-[Type "Classique"]
-[Time "13"]
-[ECO "1"]
-
-1. e4 e5 1-0
- 
 [Event "fou"]
 [Site "?"]
-[Date "tristan"]
+[Date "1"]
 [Round "?"]
-[White "alex"]
-[Black "tristan"]
-[Result "1-0"]
-[BlackElo "4434"]
-[WhiteElo "1234"]
-[Type "Classique"]
-[Time "43"]
-[ECO "allo"]
+[White "1"]
+[Black "1"]
+[Result "1"]
+[BlackElo "1"]
+[WhiteElo "1"]
+[Type "Rapide"]
+[Time "1"]
+[ECO "1"]
 
-1. e4 e5 1-0
+1. e4 c5 1
+ 
+[Event "deux"]
+[Site "?"]
+[Date "3"]
+[Round "?"]
+[White "2"]
+[Black "3"]
+[Result "2"]
+[BlackElo "2"]
+[WhiteElo "2"]
+[Type "Classique"]
+[Time "2"]
+[ECO "2"]
+
+2
  

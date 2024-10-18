@@ -60,14 +60,12 @@ class CataloguePgn(Catalogue, ABC):
             game.headers["Time"] = une_partie.Duree_partie
             game.headers["Result"] = une_partie.Resultat_partie
             game.headers["ECO"] = une_partie.Nom_ouverture
-            if len(une_partie.deplacement) == 0:
-                break
 
-            node = game.add_variation(une_partie.deplacement[0])
+            if len(une_partie.deplacement) > 0:
+                node = game.add_variation(une_partie.deplacement[0])
 
-            for i in range(1, len(une_partie.deplacement)):
-                node = node.add_variation(une_partie.deplacement[i])
-
+                for i in range(1, len(une_partie.deplacement)):
+                    node = node.add_variation(une_partie.deplacement[i])
 
             if CptPartie == 1:
                 print(game, file=open("..\\action\\data\\chess.pgn", "w"))
